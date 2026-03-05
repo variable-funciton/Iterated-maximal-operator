@@ -121,16 +121,11 @@ st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
 
 # --- 5. 保存用の処理 (Plotly の画像をバイナリとして取得) ---
-# ※ kaleido がインストールされている必要があります (pip install kaleido)
 try:
-    # Plotly の Figure を PDF 形式のバイナリに変換
-    # engine="kaleido" を明示的に指定
-    pdf_bytes = fig.write_image(format="pdf", engine="kaleido")
-    
-    # write_image は None を返す場合があるため、その場合は to_image を使用
-    if pdf_bytes is None:
-        pdf_bytes = fig.to_image(format="pdf", engine="kaleido")
+    # to_image はバイナリデータ (bytes) を直接返します
+    pdf_bytes = fig.to_image(format="pdf", engine="kaleido")
 
+    # ダウンロードボタンにバイナリを直接渡す
     st.download_button(
         label="Export a graph to PDF",
         data=pdf_bytes,
@@ -139,7 +134,8 @@ try:
     )
 except Exception as e:
     st.error(f"Error generating PDF: {e}")
-    st.info("Tip: You can also use the camera icon at the top right of the graph to save as PNG.")
+    st.info("Kaleido is required. If it fails on Streamlit Cloud, try using the camera icon on the plot top-right.")
+
 
 
 
