@@ -117,8 +117,22 @@ st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
 
-# 2. 現在のグラフ(fig)をPDF形式でバッファに保存
-fig.savefig(buf, format="pdf", bbox_inches="tight")
+# --- 5. 保存用の処理 (Plotly の画像をバイナリとして取得) ---
+# ※ kaleido がインストールされている必要があります (pip install kaleido)
+try:
+    # Plotly の画像を PDF 形式で取得
+    pdf_bytes = fig.to_image(format="pdf")
+    
+    st.download_button(
+        label="Export a graph to PDF",
+        data=pdf_bytes,
+        file_name="iterated_maximal_operator.pdf",
+        mime="application/pdf"
+    )
+except Exception as e:
+    st.info("PDF export requires 'kaleido' library. Install it with: pip install kaleido")
+    # 代替案として、Plotlyのカメラアイコンでの保存を案内
+    st.write("Tip: You can also save the plot using the camera icon at the top right of the graph.")
 
 # 3. ダウンロードボタンを設置
 st.download_button(
@@ -127,5 +141,6 @@ st.download_button(
     file_name=f"iterated_maximal_operator.pdf",
     mime="application/pdf"
 )
+
 
 
