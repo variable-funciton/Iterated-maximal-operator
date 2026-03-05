@@ -1,6 +1,3 @@
-
-%%writefile Iterated_app.py
-
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -126,3 +123,4 @@ st.write("The definition of the iterated Hardy-Littlewood maximal operator $M^{k
 st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
+
