@@ -73,7 +73,7 @@ with st.sidebar:
     show_unit = st.checkbox("Show line $y=1$", value=True)
 
 # --- 4. 描画 (Matplotlib) ---
-fig, ax = plt.subplots(figsize=(10, 6), facecolor="lightblue")
+fig, ax = plt.subplots(figsize=(10, 6))
 
 mask = (X_GRID >= -view_range) & (X_GRID <= view_range)
 x_p, d_p = X_GRID[mask], FULL_DATA[mask, :]
@@ -123,5 +123,6 @@ st.write("The definition of the iterated Hardy-Littlewood maximal operator $M^{k
 st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
+
 
 
