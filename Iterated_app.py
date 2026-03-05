@@ -61,16 +61,16 @@ if show_unit:
                   line=dict(color="Gray", width=1, dash="dot"))
 
 fig.add_trace(go.Scatter(x=x_p, y=np.where((x_p>0)&(x_p<1), 1.0, 0.0),
-                         name=r"$\chi_{[0,1]}$", line=dict(color="black", width=3)))
+                         name=r"\chi_{[0,1]}", line=dict(color="black", width=3)))
 
 # モード判定の修正
 if mode == COMP_MODE:
     fig.add_trace(go.Scatter(x=x_p, y=d_p[:, k1-1], name=f"M^{k1}", line=dict(width=2)))
-    fig.add_trace(go.Scatter(x=x_p, y=d_p[:, k2-1], name=f"M^{k2}$", line=dict(width=2)))
+    fig.add_trace(go.Scatter(x=x_p, y=d_p[:, k2-1], name=f"M^{k2}", line=dict(width=2)))
 else:
     for i in range(k_max):
         show_leg = (i==0 or i==k_max-1 or (i+1)%(max(1, k_max//5))==0)
-        fig.add_trace(go.Scatter(x=x_p, y=d_p[:, i], name=f"$M^{i+1}$",
+        fig.add_trace(go.Scatter(x=x_p, y=d_p[:, i], name=f"M^{i+1}",
                                  line=dict(width=1), showlegend=show_leg,
                                  opacity=0.6 if not show_leg else 1.0))
 
@@ -113,4 +113,5 @@ st.write("The definition of the iterated Hardy-Littlewood maximal operator $M^{k
 st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
+
 
