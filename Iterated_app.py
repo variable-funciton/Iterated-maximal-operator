@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 from scipy.special import factorial
+# --- 5. 保存用の処理 (Plotly の画像をバイナリとして取得) ---
+import kaleido # 明示的にインポートして確認
+
 import io
 # 1. メモリ上にバイナリデータを保存するためのバッファを作成
 buf = io.BytesIO()
@@ -120,9 +123,14 @@ st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \
 # --- 5. 保存用の処理 (Plotly の画像をバイナリとして取得) ---
 # ※ kaleido がインストールされている必要があります (pip install kaleido)
 try:
-    # Plotly の画像を PDF 形式で取得
-    pdf_bytes = fig.to_image(format="pdf")
+    # Plotly の Figure を PDF 形式のバイナリに変換
+    # engine="kaleido" を明示的に指定
+    pdf_bytes = fig.write_image(format="pdf", engine="kaleido")
     
+    # write_image は None を返す場合があるため、その場合は to_image を使用
+    if pdf_bytes is None:
+        pdf_bytes = fig.to_image(format="pdf", engine="kaleido")
+
     st.download_button(
         label="Export a graph to PDF",
         data=pdf_bytes,
@@ -130,17 +138,8 @@ try:
         mime="application/pdf"
     )
 except Exception as e:
-    st.info("PDF export requires 'kaleido' library. Install it with: pip install kaleido")
-    # 代替案として、Plotlyのカメラアイコンでの保存を案内
-    st.write("Tip: You can also save the plot using the camera icon at the top right of the graph.")
-
-# 3. ダウンロードボタンを設置
-st.download_button(
-    label="Export a graph to PDF",
-    data=buf.getvalue(),
-    file_name=f"iterated_maximal_operator.pdf",
-    mime="application/pdf"
-)
+    st.error(f"Error generating PDF: {e}")
+    st.info("Tip: You can also use the camera icon at the top right of the graph to save as PNG.")
 
 
 
