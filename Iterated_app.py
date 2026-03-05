@@ -108,10 +108,11 @@ st.plotly_chart(fig, use_container_width=True, config={'include_mathjax': 'cdn'}
 # --- 6. 解説セクション ---
 st.write("---")
 st.write(r"The definition of the Hardy-Littlewood maximal operator $M$." )
-st.latex(r'''Mf(x) :=\sup_{I} \frac{1}{|I|} \int_{I} | f(y) | dy\cdot \chi_{I}(x).''')
+st.latex(r'''Mf(x) :=\sup_{\substack{ I\subset \mathbb{R},\\ I: \text{interval} }} \frac{1}{|I|} \int_{I} | f(y) | dy\cdot \chi_{I}(x).''')
 st.write("The definition of the iterated Hardy-Littlewood maximal operator $M^{k}$." )
 st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
+
 
 
