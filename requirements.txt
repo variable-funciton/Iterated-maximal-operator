@@ -1,6 +1,5 @@
 streamlit
 numpy
-plotly
+matplotlib
 scipy
-kaleido
 
