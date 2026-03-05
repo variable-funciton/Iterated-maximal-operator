@@ -1,4 +1,6 @@
 
+%%writefile Iterated_app.py
+
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,7 +76,7 @@ with st.sidebar:
     show_unit = st.checkbox("Show line $y=1$", value=True)
 
 # --- 4. 描画 (Matplotlib) ---
-fig, ax = plt.subplots(figsize=(10, 6), facecolor='lightblue')
+fig, ax = plt.subplots(figsize=(10, 6))
 
 mask = (X_GRID >= -view_range) & (X_GRID <= view_range)
 x_p, d_p = X_GRID[mask], FULL_DATA[mask, :]
@@ -86,10 +88,10 @@ if show_unit:
 ax.plot(x_p, np.where((x_p>0)&(x_p<1), 1.0, 0.0), color="black", lw=2, label=r"$\chi_{[0,1]}$")
 
 if mode == "Comparison Mode of $M^{k_1}\\left[\\chi_{[0,1]} \\right](x)$ and $M^{k_2}\\left[\\chi_{[0,1]} \\right](x)$":
-    ax.plot(x_p, d_p[:, k1-1], lw=2, label=f"$M^{{{k1}}} \\left[ \\chi_{{[0,1]}} \\right](x)$")
-    ax.plot(x_p, d_p[:, k2-1], lw=2, label=f"$M^{{{k2}}} \\left[ \\chi_{{[0,1]}} \\right](x)$")
+    ax.plot(x_p, d_p[:, k1-1], lw=2.5, color="dodgerblue", label=f"$M^{{{k1}}} \\left[ \\chi_{{[0,1]}} \\right](x)$")
+    ax.plot(x_p, d_p[:, k2-1], lw=2.5, color="orangered", label=f"$M^{{{k2}}} \\left[ \\chi_{{[0,1]}} \\right](x)$")
 else:
-    colors = plt.cm.viridis(np.linspace(0, 1, k_max))
+    colors = plt.cm.plasma(np.linspace(0, 0.85, k_max)) 
     for i in range(k_max):
         show_leg = (i==0 or i==k_max-1 or (i+1)%(max(1, k_max//5))==0)
         ax.plot(x_p, d_p[:, i], color=colors[i], lw=1, alpha=0.7, 
@@ -124,4 +126,3 @@ st.write("The definition of the iterated Hardy-Littlewood maximal operator $M^{k
 st.latex(r'''M^{k}f(x):= \underbrace{(M \circ \dots \circ M)}_{k} f(x)''')
 st.write(r"For $f = \chi_{[0,1]}$:" )
 st.latex(r"M^k \left[ \chi_{[0,1]}\right](x) = \begin{cases} 1 & 0\leq x\leq 1 \\ \displaystyle \frac{1}{x} \sum_{j=0}^{k-1} \frac{(\log (x))^j}{j!} & x >1 \\ \displaystyle \frac{1}{1-x} \sum_{j=0}^{k-1} \frac{(\log (1-x))^j}{j!} & x < 0 \end{cases}")
-
